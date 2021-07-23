@@ -7,11 +7,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { PersonsProviderService } from './services/persons-provider.service';
 import { PersonProviderService } from './services/person-provider.service';
+import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    NotificationBarComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,6 +27,7 @@ import { PersonProviderService } from './services/person-provider.service';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   exports: [
     FormsModule,
@@ -32,6 +38,7 @@ import { PersonProviderService } from './services/person-provider.service';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   providers: [
     PersonsProviderService,

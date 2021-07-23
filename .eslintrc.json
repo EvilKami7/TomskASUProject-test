@@ -63,6 +63,10 @@
             "prefix": "app",
             "style": "kebab-case"
           }
+        ],
+        "no-useless-constructor" : "off" ,
+        "@typescript-eslint/no-useless-constructor": [
+          "warn"
         ]
       }
     },
@@ -74,6 +78,16 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
+    },
+    {
+      "files": ["*.component.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+      },
+      "plugins": ["@angular-eslint/template"],
+      "processor": "@angular-eslint/template/extract-inline-html"
     }
   ]
 }

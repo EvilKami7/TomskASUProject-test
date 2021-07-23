@@ -8,8 +8,8 @@ import { API_URL } from '../constants/api-url.constants';
   providedIn: 'root',
 })
 export class PersonsProviderService extends BaseDataService<Person[]> {
-  constructor(htttpClient: HttpClient) {
-    super(htttpClient);
+  constructor(private httpClient: HttpClient) {
+    super(httpClient);
   }
 
   getPersons(): void {

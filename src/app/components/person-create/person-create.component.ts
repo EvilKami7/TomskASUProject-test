@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PersonRequest } from '../../shared/models/person-request.model';
+import { PersonActionService } from '../../shared/services/person-action.service';
 
 @Component({
   selector: 'app-person-create',
@@ -8,6 +10,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PersonCreateComponent implements OnInit {
   form: FormGroup;
+
+  constructor(private personAction: PersonActionService) {
+  }
+
   ngOnInit(): void {
     this.form = new FormGroup(
       {
@@ -21,7 +27,9 @@ export class PersonCreateComponent implements OnInit {
     return 'You must enter a value';
   }
 
-  submit() {
+  submit(): void {
+    this.personAction.createPerson(this.form.getRawValue(), () => {
 
+    });
   }
 }

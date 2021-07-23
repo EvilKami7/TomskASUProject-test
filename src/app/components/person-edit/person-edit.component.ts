@@ -1,9 +1,12 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {
+  Component, Inject, OnDestroy, OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PersonProviderService } from '../../shared/services/person-provider.service';
 import { Person } from '../../shared/models/person.model';
+import { PersonActionService } from '../../shared/services/person-action.service';
 
 @Component({
   selector: 'app-person-edit',
@@ -16,7 +19,8 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   private person: Person;
   constructor(
     private personProvider: PersonProviderService,
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    private personAction: PersonActionService,
+    @Inject(MAT_DIALOG_DATA) private id: string,
   ) {
   }
 
@@ -30,14 +34,17 @@ export class PersonEditComponent implements OnInit, OnDestroy {
         },
       );
     });
-    this.personProvider.getPersonById(this.data);
+    this.personProvider.getPersonById(this.id);
   }
 
   getErrorMessage(): string {
     return 'You must enter a value';
   }
 
-  submit() {
+  submit(): void {
+    this.personAction.updatePerson(this.id, this.form.getRawValue(), () => {
+
+    });
   }
 
   ngOnDestroy(): void {

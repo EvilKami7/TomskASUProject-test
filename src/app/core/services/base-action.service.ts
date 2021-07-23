@@ -8,7 +8,7 @@ import { HttpOptions } from '../models/http-options.model';
   providedIn: 'root',
 })
 export abstract class BaseActionService {
-  protected constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   sendAction(method: HttpAction, path: string, callbackObject?: CallbackObject, options?: HttpOptions): void {
     this.httpClient.request(method, path, options).subscribe(

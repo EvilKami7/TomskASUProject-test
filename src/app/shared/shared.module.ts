@@ -6,11 +6,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PersonsProviderService } from './services/persons-provider.service';
+import { PersonProviderService } from './services/person-provider.service';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
@@ -19,12 +24,18 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+  ],
+  providers: [
+    PersonsProviderService,
+    PersonProviderService,
   ],
 })
 export class SharedModule { }

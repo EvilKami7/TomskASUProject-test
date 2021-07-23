@@ -1,25 +1,31 @@
-<table>
-  <thead>
-  <tr>
-    <th>Index</th>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let person of personsList; let idx = index">
-    <td>{{ idx + 1 }}</td>
-    <td>{{ person.name }}</td>
-    <td>{{ person.surname }}</td>
-    <td>
-      <button mat-mini-fab color="primary" aria-label="Edit" (click)="editPerson(person.id)">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-mini-fab color="primary" aria-label="Delete" (click)="deletePerson(person.id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="persons-wrapper">
+  <div class="person-create">
+    <button mat-button color="primary" (click)="createPerson()">Create new person</button>
+  </div>
+  <table>
+    <thead>
+    <tr>
+      <th>Index</th>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let person of personsList; let idx = index">
+      <td>{{ idx + 1 }}</td>
+      <td>{{ person.name }}</td>
+      <td>{{ person.surname }}</td>
+      <td>
+        <button mat-mini-fab color="primary" aria-label="Edit" (click)="editPerson(person.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" aria-label="Delete" (click)="deletePerson(person.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

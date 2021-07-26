@@ -12,6 +12,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PersonsProviderService } from './services/persons-provider.service';
 import { PersonProviderService } from './services/person-provider.service';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
+import { NotificationService } from './services/notification.service';
+import {PersonActionService} from "./services/person-action.service";
 
 @NgModule({
   declarations: [
@@ -43,6 +45,9 @@ import { NotificationBarComponent } from './components/notification-bar/notifica
   providers: [
     PersonsProviderService,
     PersonProviderService,
+    PersonActionService,
+    NotificationService,
+    NotificationBarComponent,
   ],
 })
 export class SharedModule { }

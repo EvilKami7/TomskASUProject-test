@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PersonRequest } from '../../shared/models/person-request.model';
+import { Subscription } from 'rxjs';
 import { PersonActionService } from '../../shared/services/person-action.service';
+import { ActionDeterminateService } from '../../shared/services/action-determinate.service';
 
 @Component({
   selector: 'app-person-create',
@@ -10,8 +11,10 @@ import { PersonActionService } from '../../shared/services/person-action.service
 })
 export class PersonCreateComponent implements OnInit {
   form: FormGroup;
+  private editDeterSub: Subscription;
+  btnDisabled: boolean;
 
-  constructor(private personAction: PersonActionService) {
+  constructor(private personAction: PersonActionService, private actionDeter: ActionDeterminateService) {
   }
 
   ngOnInit(): void {
@@ -21,6 +24,9 @@ export class PersonCreateComponent implements OnInit {
         surname: new FormControl(null, Validators.required),
       },
     );
+    this.editDeterSub = this.actionDeter.editDeterminate$.subscribe((value) => {
+      this.btnDisabled = value === 'Pending';
+    });
   }
 
   getErrorMessage(): string {
@@ -28,8 +34,7 @@ export class PersonCreateComponent implements OnInit {
   }
 
   submit(): void {
-    this.personAction.createPerson(this.form.getRawValue(), () => {
-
-    });
+    this.actionDeter.setCreateDeterminate('Pending');
+    this.personAction.createPerson(this.form.getRawValue());
   }
 }

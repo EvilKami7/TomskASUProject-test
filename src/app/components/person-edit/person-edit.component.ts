@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { PersonProviderService } from '../../shared/services/person-provider.service';
 import { Person } from '../../shared/models/person.model';
 import { PersonActionService } from '../../shared/services/person-action.service';
+import { ActionDeterminateService } from '../../shared/services/action-determinate.service';
 
 @Component({
   selector: 'app-person-edit',
@@ -17,9 +18,12 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   private subscription: Subscription;
   private person: Person;
+  private editDeterSub: Subscription;
+  btnDisabled = false;
   constructor(
     private personProvider: PersonProviderService,
     private personAction: PersonActionService,
+    private actionDeter: ActionDeterminateService,
     @Inject(MAT_DIALOG_DATA) private id: string,
   ) {
   }
@@ -35,6 +39,9 @@ export class PersonEditComponent implements OnInit, OnDestroy {
       );
     });
     this.personProvider.getPersonById(this.id);
+    this.editDeterSub = this.actionDeter.editDeterminate$.subscribe((value) => {
+      this.btnDisabled = value === 'Pending';
+    });
   }
 
   getErrorMessage(): string {
@@ -42,12 +49,12 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.personAction.updatePerson(this.id, this.form.getRawValue(), () => {
-
-    });
+    this.actionDeter.setEditDeterminate('Pending');
+    this.personAction.updatePerson(this.id, this.form.getRawValue());
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.editDeterSub?.unsubscribe();
   }
 }

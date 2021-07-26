@@ -15,7 +15,7 @@
         <mat-error *ngIf="this.form.get('surname')?.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </p>
-    <button mat-button type="submit" [disabled]="form.invalid">Submit</button>
+    <button mat-button type="submit" [disabled]="form.invalid || btnDisabled">Submit</button>
     <button mat-button mat-dialog-close>Cancel</button>
   </form>
 </mat-dialog-content>

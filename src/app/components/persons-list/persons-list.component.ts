@@ -6,6 +6,7 @@ import { Person } from '../../shared/models/person.model';
 import { PersonEditComponent } from '../person-edit/person-edit.component';
 import { PersonCreateComponent } from '../person-create/person-create.component';
 import { PersonActionService } from '../../shared/services/person-action.service';
+import { ActionDeterminateService } from '../../shared/services/action-determinate.service';
 
 @Component({
   selector: 'app-persons-list',
@@ -16,27 +17,41 @@ export class PersonsListComponent implements OnInit, OnDestroy {
   personsList: Person[] = [];
   personsSub: Subscription;
   displayedColumns: string[];
-  private dialogSubscription: Subscription;
+  private dialogCreateSubscription: Subscription;
+  private dialogEditSubscription: Subscription;
+  private createSub: Subscription;
+  private editSub: Subscription;
   constructor(private personsProvider: PersonsProviderService,
     private personAction: PersonActionService,
-    public dialog: MatDialog) { }
+    private actionDeterminate: ActionDeterminateService,
+    public dialogCreate: MatDialog,
+    public dialogEdit: MatDialog) { }
 
   ngOnInit(): void {
     this.personsSub = this.personsProvider.data$.subscribe((persons) => {
       this.personsList = persons;
     });
     this.personsProvider.getPersons();
+    this.createSub = this.actionDeterminate.createDeterminate$.subscribe((value) => {
+      if (value === 'Success' || value === 'Error') this.dialogCreate.closeAll();
+    });
+    this.editSub = this.actionDeterminate.editDeterminate$.subscribe((value) => {
+      if (value === 'Success' || value === 'Error') this.dialogEdit.closeAll();
+    });
   }
 
   ngOnDestroy(): void {
     this.personsSub?.unsubscribe();
-    this.dialogSubscription?.unsubscribe();
+    this.dialogCreateSubscription?.unsubscribe();
+    this.dialogEditSubscription?.unsubscribe();
+    this.createSub?.unsubscribe();
   }
 
   editPerson(id: string): void {
-    const dialogRef = this.dialog.open(PersonEditComponent, { data: id });
-    this.dialogSubscription = dialogRef.afterClosed().subscribe(() => {
+    const dialogRef = this.dialogEdit.open(PersonEditComponent, { data: id });
+    this.dialogEditSubscription = dialogRef.afterClosed().subscribe(() => {
       this.personsProvider.getPersons();
+      this.actionDeterminate.setEditDeterminate('Initial');
     });
   }
 
@@ -47,9 +62,10 @@ export class PersonsListComponent implements OnInit, OnDestroy {
   }
 
   createPerson(): void {
-    const dialogRef = this.dialog.open(PersonCreateComponent);
-    this.dialogSubscription = dialogRef.afterClosed().subscribe(() => {
+    const dialogRef = this.dialogCreate.open(PersonCreateComponent);
+    this.dialogCreateSubscription = dialogRef.afterClosed().subscribe(() => {
       this.personsProvider.getPersons();
+      this.actionDeterminate.setCreateDeterminate('Initial');
     });
   }
 }

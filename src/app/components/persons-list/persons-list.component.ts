@@ -45,6 +45,7 @@ export class PersonsListComponent implements OnInit, OnDestroy {
     this.dialogCreateSubscription?.unsubscribe();
     this.dialogEditSubscription?.unsubscribe();
     this.createSub?.unsubscribe();
+    this.editSub?.unsubscribe();
   }
 
   editPerson(id: string): void {

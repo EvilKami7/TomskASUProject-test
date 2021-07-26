@@ -49,7 +49,7 @@ export class PersonActionService extends BaseActionService {
     const action: CallbackObject = {
       onSuccess() {
         notifyService.showSuccess('Person updated');
-        actionDeterminate.setCreateDeterminate('Success');
+        actionDeterminate.setEditDeterminate('Success');
       },
       onError(error) {
         let message = '';
@@ -67,7 +67,7 @@ export class PersonActionService extends BaseActionService {
             message = 'Sorry! The request could not be processed!';
         }
         notifyService.showError(message);
-        actionDeterminate.setCreateDeterminate('Error');
+        actionDeterminate.setEditDeterminate('Error');
       },
     };
     this.sendAction('PATCH', API_URL.PERSON_BY_ID(id), action, { body: person });

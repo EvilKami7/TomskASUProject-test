@@ -33,8 +33,8 @@ export class PersonEditComponent implements OnInit, OnDestroy {
       this.person = data;
       this.form = new FormGroup(
         {
-          name: new FormControl(this.person.name, Validators.required),
-          surname: new FormControl(this.person.surname, Validators.required),
+          name: new FormControl(this.person.name, [Validators.maxLength(15), Validators.required]),
+          surname: new FormControl(this.person.surname, [Validators.maxLength(15), Validators.required]),
         },
       );
     });
@@ -44,8 +44,10 @@ export class PersonEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  getErrorMessage(): string {
-    return 'You must enter a value';
+  getErrorMessage(field: string): string {
+    if (this.form.get(field)?.hasError('required')) return 'You must enter a value';
+    if (this.form.get(field)?.hasError('maxlength')) return 'Length must not extend 15 symbols';
+    return '';
   }
 
   submit(): void {

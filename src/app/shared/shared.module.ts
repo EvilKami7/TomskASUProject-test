@@ -13,7 +13,8 @@ import { PersonsProviderService } from './services/persons-provider.service';
 import { PersonProviderService } from './services/person-provider.service';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 import { NotificationService } from './services/notification.service';
-import {PersonActionService} from "./services/person-action.service";
+import { PersonActionService } from './services/person-action.service';
+import { ActionDeterminateService } from './services/action-determinate.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {PersonActionService} from "./services/person-action.service";
     PersonActionService,
     NotificationService,
     NotificationBarComponent,
+    ActionDeterminateService,
   ],
 })
 export class SharedModule { }

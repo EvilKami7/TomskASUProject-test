@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { BaseDataService } from './base-data.service';
 
 describe('BaseDataService', () => {
+  // @ts-ignore
   let service: BaseDataService;
 
   beforeEach(() => {

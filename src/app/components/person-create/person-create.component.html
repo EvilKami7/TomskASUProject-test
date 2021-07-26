@@ -1,21 +1,23 @@
-<mat-dialog-content class="mat-typography">
-  <h3>Create new person</h3>
-  <form [formGroup] = "form" (ngSubmit) = "submit()">
-    <p>
-      <mat-form-field  appearance="fill">
-        <mat-label>Enter name</mat-label>
-        <input matInput placeholder="Name" formControlName="name" required>
-        <mat-error *ngIf="this.form.get('name')?.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill">
-        <mat-label>Enter surname</mat-label>
-        <input matInput placeholder="Surname" formControlName="surname" required>
-        <mat-error *ngIf="this.form.get('surname')?.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-    </p>
-    <button mat-button type="submit" [disabled]="form.invalid || btnDisabled">Submit</button>
-    <button mat-button mat-dialog-close>Cancel</button>
-  </form>
-</mat-dialog-content>
+<div class="person-create">
+  <mat-dialog-content class="mat-typography">
+    <h3>Create new person</h3>
+    <form [formGroup] = "form" (ngSubmit) = "submit()">
+      <p>
+        <mat-form-field  appearance="fill">
+          <mat-label>Enter name</mat-label>
+          <input matInput placeholder="Name" formControlName="name" required>
+          <mat-error *ngIf="this.form.get('name')?.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter surname</mat-label>
+          <input matInput placeholder="Surname" formControlName="surname" required>
+          <mat-error *ngIf="this.form.get('surname')?.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </p>
+      <button mat-button type="submit" [disabled]="form.invalid || btnDisabled">Submit</button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </form>
+  </mat-dialog-content>
+</div>

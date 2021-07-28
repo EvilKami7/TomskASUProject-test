@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BaseDataService } from '../../core/services/base-data.service';
 import { Person } from '../models/person.model';
 import { API_URL } from '../constants/api-url.constants';
@@ -10,7 +11,7 @@ export class PersonProviderService extends BaseDataService<Person> {
     super(httpClient);
   }
 
-  getPersonById(id: string): void {
-    this.getData(API_URL.PERSON_BY_ID(id));
+  getPersonById(id: string): Observable<Person> {
+    return this.getData(API_URL.PERSON_BY_ID(id));
   }
 }

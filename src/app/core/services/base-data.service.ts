@@ -1,17 +1,11 @@
-import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { HttpOptions } from '../models/http-options.model';
 
 export abstract class BaseDataService<T> {
-  data$: Observable<T>;
-  private subject = new Subject<T>();
-  protected constructor(private http: HttpClient) {
-    this.data$ = this.subject.asObservable();
-  }
+  protected constructor(private http: HttpClient) {}
 
-  getData(path: string, options?: HttpOptions): void {
-    this.http.get<T>(path, options).subscribe((data: T) => {
-      this.subject.next(data);
-    });
+  getData(path: string, options?: HttpOptions): Observable<T> {
+    return this.http.get<T>(path, options);
   }
 }

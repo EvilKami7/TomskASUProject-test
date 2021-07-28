@@ -29,7 +29,7 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.personProvider.data$.subscribe((data) => {
+    this.subscription = this.personProvider.getPersonById(this.id).subscribe((data) => {
       this.person = data;
       this.form = new FormGroup(
         {
@@ -38,7 +38,6 @@ export class PersonEditComponent implements OnInit, OnDestroy {
         },
       );
     });
-    this.personProvider.getPersonById(this.id);
     this.editDeterSub = this.actionDeter.editDeterminate$.subscribe((value) => {
       this.btnDisabled = value === 'Pending';
     });

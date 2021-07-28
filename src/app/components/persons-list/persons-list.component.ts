@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PersonsProviderService } from '../../shared/services/persons-provider.service';
 import { Person } from '../../shared/models/person.model';
@@ -14,8 +14,7 @@ import { ActionDeterminateService } from '../../shared/services/action-determina
   styleUrls: ['./persons-list.component.scss'],
 })
 export class PersonsListComponent implements OnInit, OnDestroy {
-  personsList: Person[] = [];
-  personsSub: Subscription;
+  personsList: Observable<Person[]>;
   displayedColumns: string[];
   private dialogCreateSubscription: Subscription;
   private dialogEditSubscription: Subscription;
@@ -28,10 +27,7 @@ export class PersonsListComponent implements OnInit, OnDestroy {
     public dialogEdit: MatDialog) { }
 
   ngOnInit(): void {
-    this.personsSub = this.personsProvider.data$.subscribe((persons) => {
-      this.personsList = persons;
-    });
-    this.personsProvider.getPersons();
+    this.personsList = this.personsProvider.getPersons();
     this.createSub = this.actionDeterminate.createDeterminate$.subscribe((value) => {
       if (value === 'Success' || value === 'Error') this.dialogCreate.closeAll();
     });
@@ -41,7 +37,6 @@ export class PersonsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.personsSub?.unsubscribe();
     this.dialogCreateSubscription?.unsubscribe();
     this.dialogEditSubscription?.unsubscribe();
     this.createSub?.unsubscribe();
@@ -51,22 +46,22 @@ export class PersonsListComponent implements OnInit, OnDestroy {
   editPerson(id: string): void {
     const dialogRef = this.dialogEdit.open(PersonEditComponent, { data: id });
     this.dialogEditSubscription = dialogRef.afterClosed().subscribe(() => {
-      this.personsProvider.getPersons();
       this.actionDeterminate.setEditDeterminate('Initial');
+      this.personsList = this.personsProvider.getPersons();
     });
   }
 
   deletePerson(id: string): void {
     this.personAction.deletePerson(id, () => {
-      this.personsProvider.getPersons();
+      this.personsList = this.personsProvider.getPersons();
     });
   }
 
   createPerson(): void {
     const dialogRef = this.dialogCreate.open(PersonCreateComponent);
     this.dialogCreateSubscription = dialogRef.afterClosed().subscribe(() => {
-      this.personsProvider.getPersons();
       this.actionDeterminate.setCreateDeterminate('Initial');
+      this.personsList = this.personsProvider.getPersons();
     });
   }
 }

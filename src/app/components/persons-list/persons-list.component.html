@@ -13,7 +13,7 @@
       </tr>
       </thead>
       <tbody class="table-body">
-      <tr *ngFor="let person of personsList; let idx = index">
+      <tr *ngFor="let person of personsList | async; let idx = index">
         <td>{{ idx + 1 }}</td>
         <td>{{ person.name }}</td>
         <td>{{ person.surname }}</td>

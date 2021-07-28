@@ -15,7 +15,6 @@ import { ActionDeterminateService } from '../../shared/services/action-determina
 })
 export class PersonsListComponent implements OnInit, OnDestroy {
   personsList: Observable<Person[]>;
-  displayedColumns: string[];
   private dialogCreateSubscription: Subscription;
   private dialogEditSubscription: Subscription;
   private createSub: Subscription;

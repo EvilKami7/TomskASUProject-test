@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-notification-bar',
-  templateUrl: './notification-bar.component.html',
+  template: '',
 })
 export class NotificationBarComponent {
   constructor(public snackBar: MatSnackBar) {}

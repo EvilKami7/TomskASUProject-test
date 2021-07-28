@@ -24,21 +24,6 @@ export class PersonActionService extends BaseActionService {
         notifyService.showSuccess('Person created');
         actionDeterminate.setCreateDeterminate('Success');
       },
-      onError(error) {
-        let message = '';
-        switch (error.status) {
-          case 400:
-            message = 'Bad request!';
-            break;
-          case 500:
-            message = 'Server error!';
-            break;
-          default:
-            message = 'Sorry! The request could not be processed!';
-        }
-        notifyService.showError(message);
-        actionDeterminate.setCreateDeterminate('Error');
-      },
     };
     this.sendAction('POST', API_URL.PERSONS, action, { body: person });
   }
@@ -51,24 +36,6 @@ export class PersonActionService extends BaseActionService {
         notifyService.showSuccess('Person updated');
         actionDeterminate.setEditDeterminate('Success');
       },
-      onError(error) {
-        let message = '';
-        switch (error.status) {
-          case 400:
-            message = 'Bad request!';
-            break;
-          case 404:
-            message = 'Not Found!';
-            break;
-          case 500:
-            message = 'Server error!';
-            break;
-          default:
-            message = 'Sorry! The request could not be processed!';
-        }
-        notifyService.showError(message);
-        actionDeterminate.setEditDeterminate('Error');
-      },
     };
     this.sendAction('PATCH', API_URL.PERSON_BY_ID(id), action, { body: person });
   }
@@ -79,23 +46,6 @@ export class PersonActionService extends BaseActionService {
       onSuccess() {
         callback();
         notifyService.showSuccess('Person deleted');
-      },
-      onError(error) {
-        let message = '';
-        switch (error.status) {
-          case 400:
-            message = 'Bad request!';
-            break;
-          case 404:
-            message = 'Not Found!';
-            break;
-          case 500:
-            message = 'Server error!';
-            break;
-          default:
-            message = 'Sorry! The request could not be processed!';
-        }
-        notifyService.showError(message);
       },
     };
     this.sendAction('DELETE', API_URL.PERSON_BY_ID(id), action);

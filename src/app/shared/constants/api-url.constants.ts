@@ -1,6 +1,6 @@
-import { BASE_URL } from './base-url.constants';
+import { environment } from '../../../environments/environment';
 
 export const API_URL = {
-  PERSONS: `${BASE_URL}/persons?`,
-  PERSON_BY_ID: (id: string): string => `${BASE_URL}/persons/${id}?`,
+  PERSONS: `${environment.BaseURL}/persons?`,
+  PERSON_BY_ID: (id: string): string => `${environment.BaseURL}/persons/${id}?`,
 };
